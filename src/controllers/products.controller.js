@@ -4,12 +4,13 @@ import {
   getAllProductsService,
   postProductService,
   retrieveProductService,
+  searchByCategorieService,
 } from "../services/products.services.js";
 
 const postProductController = async (req, res) => {
   const data = await postProductService(req.body);
 
-  return res.status(200).json(data);
+  return res.status(201).json(data);
 };
 
 const getAllProductsController = async (req, res) => {
@@ -33,6 +34,12 @@ const editProductController = async (req, res) => {
 const deleteProductController = async (req, res) => {
   const data = await deleteProductService(req.params.uuid);
 
+  return res.status(204).json(data);
+};
+
+const searchBycategorieController = async (req, res) => {
+  const data = await searchByCategorieService(req.params.id);
+
   return res.status(200).json(data);
 };
 
@@ -42,4 +49,5 @@ export {
   retrieveProductController,
   deleteProductController,
   editProductController,
+  searchBycategorieController,
 };

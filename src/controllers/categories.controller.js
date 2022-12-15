@@ -33,7 +33,7 @@ const editCategorieController = async (req, res) => {
 const deleteCategorieController = async (req, res) => {
   const data = await deleteCategorieService(req.params.id);
 
-  return res.status(200).json(data);
+  return res.status(204).json(data);
 };
 
 export {

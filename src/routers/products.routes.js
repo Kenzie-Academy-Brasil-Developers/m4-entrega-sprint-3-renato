@@ -7,8 +7,10 @@ import {
   getAllProductsController,
   postProductController,
   retrieveProductController,
+  searchBycategorieController,
 } from "../controllers/products.controller.js";
 import { ensureProductExistsMiddleware } from "../middlewares/products/ensureProductExists.js";
+import { ensureCategorieExistsMiddleware } from "../middlewares/categories/ensureCategorieExists.js";
 
 const productsRoutes = Router();
 
@@ -24,6 +26,12 @@ productsRoutes.get(
   "/:uuid",
   ensureProductExistsMiddleware,
   retrieveProductController
+);
+
+productsRoutes.get(
+  "/category/:id",
+  ensureCategorieExistsMiddleware,
+  searchBycategorieController
 );
 
 productsRoutes.patch(

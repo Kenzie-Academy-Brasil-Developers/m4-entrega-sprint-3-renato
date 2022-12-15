@@ -10,7 +10,7 @@ const postCategorieService = async (payload) => {
   );
 
   if (searchCategorie.rowCount > 0) {
-    throw new Errors("categorie already exists", 409);
+    throw new Errors("categorie already exists", 400);
   }
 
   const queryResponse = await database
@@ -21,7 +21,7 @@ const postCategorieService = async (payload) => {
         `,
       [payload.name]
     )
-    .then((res) => res.rows);
+    .then((res) => res.rows[0]);
 
   return queryResponse;
 };
@@ -43,7 +43,7 @@ const retrieveCatgorieService = async (id) => {
   `,
       [id]
     )
-    .then((res) => res.rows);
+    .then((res) => res.rows[0]);
 
   return queryResponse;
 };
@@ -62,7 +62,7 @@ const editCategorieService = async (payload, id) => {
       `,
       [payload.name, id]
     )
-    .then((res) => res.rows);
+    .then((res) => res.rows[0]);
 
   return queryResponse;
 };

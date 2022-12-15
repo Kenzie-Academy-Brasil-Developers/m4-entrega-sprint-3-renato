@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "nodemon ./src/server.js",
     "actions": "cross-env NODE_ENV=test DB_USER=kenzie DB_PASSWORD=kenzie jest --forceExit",
+    "clear_db": "psql -U renat -d tests_products -c \"DELETE FROM products; DELETE FROM categories;\" \"exit\"",
     "test": "cross-env NODE_ENV=test DB_USER=renat DB_PASSWORD=morango123 jest --verbose --forceExit"
   },
   "dependencies": {

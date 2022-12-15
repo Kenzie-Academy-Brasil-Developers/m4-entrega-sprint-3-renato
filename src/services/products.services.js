@@ -10,7 +10,7 @@ const postProductService = async (payload) => {
   );
 
   if (searchProduct.rowCount > 0) {
-    throw new Errors("product already exists", 409);
+    throw new Errors("product already exists", 400);
   }
 
   const queryResponse = await database
@@ -21,7 +21,7 @@ const postProductService = async (payload) => {
                     RETURNING *;`,
       [payload.name, payload.price, payload.category_id]
     )
-    .then((res) => res.rows);
+    .then((res) => res.rows[0]);
 
   return queryResponse;
 };
@@ -46,7 +46,7 @@ const retrieveProductService = async (id) => {
   `,
       [id]
     )
-    .then((res) => res.rows);
+    .then((res) => res.rows[0]);
 
   return queryResponse;
 };
@@ -83,6 +83,19 @@ const deleteProductService = async (id) => {
   `,
       [id]
     )
+    .then((res) => res.rows[0]);
+
+  return queryResponse;
+};
+
+const searchByCategorieService = async (id) => {
+  const queryResponse = await database
+    .query(
+      `
+      SELECT c.name AS category, * FROM categories c  JOIN products p ON p.category_id = $1;
+  `,
+      [id]
+    )
     .then((res) => res.rows);
 
   return queryResponse;
@@ -94,4 +107,5 @@ export {
   retrieveProductService,
   deleteProductService,
   editProductService,
+  searchByCategorieService,
 };
